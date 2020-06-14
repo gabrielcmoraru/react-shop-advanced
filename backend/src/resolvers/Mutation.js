@@ -30,6 +30,7 @@ const Mutations = {
             info
         );
     },
+
     async deleteItem(parent, args, ctx, info) {
         const where = { id: args.id };
         // 1.find item
