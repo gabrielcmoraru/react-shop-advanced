@@ -60,13 +60,20 @@ const Mutations = {
         args.email = args.email.toLowerCase();
         // hash password
         const password = await bcrypt.hash(args.password, 10);
+        // TODO Permission HACK in use at the moment check when apollo allows updating this from the system
+        let tempPermission;
+        if (args.email == 'bob1@bob1.com') {
+            tempPermission = 'ADMIN';
+        } else {
+            tempPermission = 'USER';
+        }
         // create user in db
         const user = await ctx.db.mutation.createUser(
             {
                 data: {
                     ...args,
                     password,
-                    permissions: { set: ['USER'] },
+                    permissions: { set: [tempPermission] },
                 },
             },
             info
